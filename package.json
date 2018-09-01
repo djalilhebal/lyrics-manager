@@ -1,0 +1,14 @@
+{
+  "name": "lyrics-manager",
+  "version": "0.0.0",
+  "description": "[INCOMPLETE] Manages saved lyrics (HTML) pages",
+  "author": "Djalil Dreamski <dreamski21@gmail.com> (https://github.com/dreamski21)",
+  "keywords": ["lyrics", "azlyrics", "darklyrics"],
+  "license": "CC0",
+  "main": "./src/index.js",
+  "bin" : "./cli.js",
+  "dependencies": {
+    "commander": "~2.16.0",
+	"adm-zip": "~0.4.12"
+  }
+}
