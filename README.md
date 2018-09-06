@@ -1,13 +1,23 @@
 # Lyrics Manager
 [INCOMPLETE] [WIP]
-This is not a scrapper/crawler (still, it can be incorporated into one),
-but a parser for personal uses.
+This is not a scrapper/crawler (still, it can be incorporated into one), but a lyrics parser for personal uses.
 
 ## Supported
 
 * azlyrics
 * darklyrics
 * mytext (JSON + text) and plain text
+
+## Installation
+- Make sure [nodejs](https://nodejs.org) is installed
+
+- Download or clone this repo (`git clone https://github.com/dreamski21/lyrics-manager.git`)
+
+- run:
+```sh
+cd lyrics-manager
+npm install -g
+```
 
 ## API
 ### Song
