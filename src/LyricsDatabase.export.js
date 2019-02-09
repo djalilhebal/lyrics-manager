@@ -46,14 +46,14 @@ function generateHtml(database, headingLevel) {
   function generateHeading(str, lvl, style = '') { // 'b', 'i', ''
     let heading = `<h${lvl}>${str}</h${lvl}>`
     if (headingLevel >= lvl) {
-    id = identifier.newId();
-    let indexHeading = `${'    '.repeat(lvl)}<a href="#${id}">${str}</a>`;
-    if (style === 'b' || style === 'i') {
-      indexHeading = `<${style}>${indexHeading}</${style}>`
-    }
-    _list.push(indexHeading);
-    
-    heading = heading.replace('>', ` id=${id}>`);
+      const id = identifier.newId();
+      let indexHeading = `${'    '.repeat(lvl)}<a href="#${id}">${str}</a>`;
+      if (style === 'b' || style === 'i') {
+        indexHeading = `<${style}>${indexHeading}</${style}>`
+      }
+      _list.push(indexHeading);
+      
+      heading = heading.replace('>', ` id=${id}>`);
     }
     return heading;
   }

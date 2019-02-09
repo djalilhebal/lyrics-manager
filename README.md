@@ -1,5 +1,5 @@
 # Lyrics Manager
-[INCOMPLETE] [WIP]
+[WIP]
 This is not a scrapper/crawler (still, it can be incorporated into one), but a lyrics parser for personal uses.
 
 ## Supported
@@ -9,14 +9,10 @@ This is not a scrapper/crawler (still, it can be incorporated into one), but a l
 * mytext (JSON + text) and plain text
 
 ## Installation
-- Make sure [nodejs](https://nodejs.org) is installed
+- Make sure [nodejs](https://nodejs.org) is installed, then run:
 
-- Download or clone this repo (`git clone https://github.com/dreamski21/lyrics-manager.git`)
-
-- run:
 ```sh
-cd lyrics-manager
-npm install -g
+npm install dreamski21/lyrics-manager -g
 ```
 
 ## API
@@ -77,9 +73,10 @@ parseAny('./azlyrics_Falling In Reverse/Fashionably Late/Falling In Reverse Lyri
 ```
 
 ## TODO
-- `LyricsDatabase.getJson()` (JSON.stringify doesn't work on `Map`s)
+Genuis: document.querySelector('lyrics').innerText
+var TRACKING_DATA = {...};
 
-- `LyricsDatabase.importJson()` imports a previously exported JSON DB, duh
+- `LyricsDatabase.getJson()` (JSON.stringify doesn't work on `Map`s)
 
 - Instead of importing/exporting JSON files, why not use `nedb`?
 (basically a non-SQL JSON database for small projects)
@@ -87,27 +84,24 @@ parseAny('./azlyrics_Falling In Reverse/Fashionably Late/Falling In Reverse Lyri
 - `LyricsDatabase.search(query)`
 *"And what is the use of a database," thought Malice, "without searches or queries?"*
 
+- Add CLI a parameter like: --template "artist/[year] album/song.txt" (or ".lrc")
+
 ## Known issues
 **It accepts files that shouldn't be accepted.**
 
-Currently it ignores them when errors occur while parsing.
+Currently it ignores them if errors occur while parsing.
 
-Fixes:
-- Improve the whitelist regex, or
-- Add a blacklist regex
+Workaround: Improve the whitelist regex or add a blacklist regex.
 
-**Zipped files with non-ASCII characters in their names are *ruined***
+**Zipped files with non-ASCII characters in their names are 'ruined'**
 
-Example:
-- `Tal/A L'infini/Le Passé` -> `Tal/A L'infini/Le Pass├⌐.tx`
-- `Snøfall.txt` -> `Sn├╕fall.tx`
+For example, `Tal/A L'infini/Le Passé` becomes `Tal/A L'infini/Le Pass├⌐.tx`
 
 7-zip can neither read nor extract them.
 
 Fixes:
-- iconv (UTF8/UTF18 to ASCII), romanize("Passé/Snøfall") == "Passe/Snofall"
-- The awesome `adm-zip` module is probably the problem, as 7-zip correctly processes .zip files with Unicode names.
-Just use a different module (?)
+- iconv (UTF8/UTF18 to ASCII), romanize("Le Passé") == "Le Passe"
+- The awesome `adm-zip` module is probably the problem, as 7-zip correctly processes .zip files with Unicode names. So just use a different module (?)
 
 **HTML escape sequences**
 

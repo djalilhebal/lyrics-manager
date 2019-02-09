@@ -19,8 +19,9 @@ class Song {
     return str;
   }
   
-  normalizeName(str) {
-    if (!this.stringOrNull(str)) return null;
+  /** string */ normalizeName(str) {
+    // TODO: str.replace(/&amp;/g, '&'); // Black &amp; Blue -> Black & Blue
+    if (!this.stringOrNull(str)) return '';
     
     return str // 'ASKING ALEXANDRIA'
     .trim()
