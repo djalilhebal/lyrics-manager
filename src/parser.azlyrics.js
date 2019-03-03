@@ -10,8 +10,8 @@ const rAzlyricsFile = /azlyrics_(.+?)\/(.+?)\/\1 - (.+) Lyrics _ AZLyrics\.com\.
 // pattern: `azlyrics_ARTIST/ALBUM/ARTIST Lyrics - TITLE.html`
 const rAzlyricsFileOld = /azlyrics_(.+?)\/(.+?)\/\1 Lyrics - (.+)\.html$/
 
-function accepts(path) {
-  return rAzlyricsFile.test(path) || rAzlyricsUrl.test(path);
+function accepts(/** string */ path) {
+  return rAzlyricsUrl.test(path) || rAzlyricsFile.test(path) || rAzlyricsFileOld.test(path);
 }
 
 function /** Song */ parse(path, html) {
@@ -31,29 +31,23 @@ function /** Song */ parse(path, html) {
       return { artist, album, title };
     } else {
       // <title>Cascada Lyrics - A Neverending Dream</title>
-      const rTitle = /.+?<title>(.+) Lyrics - (.+)<\/title>/
+      const rTitle = /<title>(.+) Lyrics - (.+)<\/title>/
       // album: <b>"Everytime We Touch"</b> (2006)<br><br>
       const rAlbum = /album: <b>"(.+)"<\/b> \((\d+)\)<br><br>/
-  
+
       const [, artist, title] = html.match(rTitle);
       const [, album, year] = html.match(rAlbum) || [];
       return {artist, album, title, year}
     }
   }
   
-  const x = new Song();
-  
   try {
     const info = getInfo();
     const lyrics = getLyrics();
-    x.setLyrics(lyrics);
-    x.setArtist(info.artist);
-    x.setAlbum(info.album);
-    x.setTitle(info.title);
-    x.setYear(info.year);
-  } catch (e) {}
-
-  return x;
+    return new Song({lyrics, ...info});
+  } catch (e) {
+    return new Song();
+  }
 }
 
 module.exports = {

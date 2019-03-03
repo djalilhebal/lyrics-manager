@@ -7,13 +7,13 @@ const rDarklyricsFile = /darklyrics_(.+)\/\1 LYRICS - _(.+)_ (\(\d+\)) (album|EP
 
 // url: `http://www.darklyrics.com/lyrics/suicidesilence/suicidesilence.html`
 // pattern: `http://www.darklyrics.com/lyrics/ARTIRST/ALBUM.html`
-const rDarklyricsUrl = /^http:\/\/www.darklyrics\.com\/lyrics\/(.+)\/(.+)\.html$/
+const rDarklyricsUrl = /^http:\/\/www.darklyrics\.com\/lyrics\/(.+)\/(.+)\.html(#.*)?$/
 
 function accepts(path) {
   return rDarklyricsFile.test(path) || rDarklyricsUrl.test(path);
 }
 
-function /** Song[] */ parse(path, html) {
+function /** Array<Song> */ parse(path, html) {
   // <title>ASKING ALEXANDRIA LYRICS - "Reckless And Relentless" (2011)</title>
   // <title>ARTIST LYRICS - "ALBUM" (YEAR) album/EP</title>
   const rTitle = /.*?<title>(.+?) LYRICS - "(.+)" \((\d+)\) (album|EP)<\/title>/
@@ -48,15 +48,7 @@ function /** Song[] */ parse(path, html) {
       .replace(/<br>|<i>|<\/i>/g, '')
       .trim();
 
-    const song = new Song();
-    song.setTitle(title);
-    song.setLyrics(lyrics);
-    song.setArtist(artist);
-    song.setAlbum(album);
-    song.setYear(year);
-    song.setNumber(number);
-    
-    return song;
+    return new Song({title, lyrics, artist, album, year, number});
   });
   
   return songs;

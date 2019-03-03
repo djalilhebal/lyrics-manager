@@ -1,27 +1,32 @@
-const exporter = require('./LyricsDatabase.export.js');
+const exporter = require('./exporter.js');
 const Song = require('./Song.js');
 
 class LyricsDatabase {
   constructor() {
-    this._db = new Map(); // underscore indicates it's private
+    this._db = new Map();
   }
   
-  /** boolean */ addSong(/** Song */ x) {
-    if (!(x instanceof Song) || !x.isUsable()) return false;
-
-    const {artist, album, title, lyrics} = x.getObj();
-  
-    const db = this._db;
+  /// @returns {boolean} indicates whether the song was successfully added or not
+  addSong(/** Song */ x) {
+    if (x instanceof Song && x.isUsable()) {
+      const obj = x.getObj();
+      const {artist, album, title} = obj;
     
-    if (!db.has(artist)) db.set(artist, new Map());
-    const artistMap = db.get(artist);
+      if (!this._db.has(artist)) this._db.set(artist, new Map());
+      const artistMap = this._db.get(artist);
 
-    if (!artistMap.has(album)) artistMap.set(album, new Map());
-    const albumMap = artistMap.get(album);
+      if (!artistMap.has(album)) artistMap.set(album, new Map());
+      const albumMap = artistMap.get(album);
 
-    albumMap.set(title, {lyrics});
+      albumMap.set(title, obj);
 
-    return true; // indicates the song was successfully added.
+      return true;
+      
+    } else {
+      console.warn('Song was not added to db', x);
+      return false;
+    }
+    
   }
   
   /** Map */ getMap() {
@@ -36,6 +41,10 @@ class LyricsDatabase {
     return exporter.generateHtml(this.getMap(), headingLevel);
   }
 
+  /** string */ getJson() {
+    return exporter.generateJson(this.getMap());
+  }
+  
 }
 
 module.exports = LyricsDatabase;

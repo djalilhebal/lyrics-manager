@@ -5,11 +5,11 @@ const Song = require('./Song.js');
 // pattern: `mytext_ARTIST/ARTIST - SONG.txt`
 const rMytextFile = /mytext_(.+)\/\1 - (.+)\.txt$/
 
-function accepts(path) {
+function /** boolean */ accepts(/** string */ path) {
   return rMytextFile.test(path);
 }
 
-function /** Song */ parse(path, content) {
+function /** Song */ parse(/** string */ path, /** string */ content) {
   const song = new Song;
 
   try {

@@ -1,14 +1,18 @@
 {
   "name": "lyrics-manager",
-  "version": "0.0.1",
-  "description": "[WIP] Manages saved lyrics (HTML) pages",
+  "version": "0.0.2",
+  "description": "Manages/extracts/exports saved lyrics (HTML) pages. *WIP*",
   "author": "Djalil Dreamski <dreamski21@gmail.com> (https://github.com/dreamski21)",
-  "keywords": ["lyrics", "azlyrics", "darklyrics"],
+  "keywords": ["lyrics", "azlyrics", "darklyrics", "genius"],
   "license": "CC0",
   "main": "./src/index.js",
   "bin" : "./cli.js",
   "dependencies": {
+    "cheerio": "~0.22.0",
     "commander": "~2.16.0",
 	  "adm-zip": "~0.4.12"
+  },  
+  "devDependencies": {
+    "tape": "~4.10.1"
   }
 }
